@@ -173,11 +173,12 @@ def ASAP(cmp_matrix: np.ndarray, mst_mode=True, cuda=False, get_scores=False):
 
     info_gain = kl_divs + kl_divs.T
     info_gain = info_gain.cpu().detach().numpy()
-    pairs_to_compare = get_maximum(info_gain)
+    
     if mst_mode:    
         # minial spanning tree for batch mode
         pairs_to_compare = compute_minimum_spanning_tree(info_gain)
-    
+    else:
+        pairs_to_compare = get_maximum(info_gain)
     
     if get_scores:
         return pairs_to_compare, Ms0.cpu().detach().numpy(), StD0.cpu().detach().numpy()
